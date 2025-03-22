@@ -3,6 +3,7 @@ const app = express();
 const dotenv = require('dotenv');
 dotenv.config();
 const cors = require('cors');
+import job from './lib/cron.js'
 const http = require('http')
 const users = require('./routes/authRoute.js');
 
@@ -17,6 +18,7 @@ const server = http.createServer(app);
 const PORT = process.env.PORT || 8080;
 
 app.use(cors())
+job.start();
 app.use(express.json());
 
 app.get('/', (req, res)=>{
