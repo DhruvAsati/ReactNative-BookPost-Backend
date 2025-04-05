@@ -84,12 +84,12 @@ const userLogin = async (req, res) => {
       return res.status(400).json({ message: "Invalid email format" });
     }
     
-    const user = await User.findOne({ email }).select("+password");
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
     // Compare the hashed password with the entered password
-    const isMatch = bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
